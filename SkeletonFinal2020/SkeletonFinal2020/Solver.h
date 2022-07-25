@@ -6,10 +6,24 @@
 #include <iostream>
 #include <set>
 #include <queue>
+#include <algorithm>
+#include <unordered_set>
 
 class Solver
 {
 public:
+    template <class State_t>
+    static size_t ComputeHash(const State_t& state)
+    {
+        static const std::hash<uint8_t> hasher;
+        size_t seed = 0u;
+        for (auto&& piece : state.GetData())
+        {
+            seed ^= hasher(piece) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        }
+        return seed;
+    }
+
     template <class State_t>
     static Moves SolveBFS(const State_t& initialState)
     {
@@ -25,18 +39,20 @@ public:
         openSet.push({ initialState, {} });
 
 		//TODO: define CLOSED SET correctly
-        auto comparator = [](const State_t& first, const State_t& second) -> bool
+        auto EqualityCmp = [](const State_t& first, const State_t& second) -> bool
         {
-            return first.GetData() < second.GetData();
+            return first.GetData() == second.GetData();
         };
-		std::set<State_t, decltype(comparator)> closedSet(comparator);
+		std::unordered_set<State_t, std::function<size_t(const State_t&)>, decltype(EqualityCmp)>
+            closedSet(8u, &ComputeHash<State_t>, EqualityCmp);
 
         while (!openSet.empty())
         {
 			// TODO: Do it nicer , who is first? second? structure binding
-            auto currentNode = openSet.front();            
-            auto&& currentState = currentNode.first;
-            auto&& currentMoves = currentNode.second;
+            auto currentNode = openSet.front();
+            auto&& [currentState, currentMoves] = currentNode;
+            /*auto&& currentState = currentNode.first;
+            auto&& currentMoves = currentNode.second;*/
             openSet.pop();
 
             // some logging
@@ -59,9 +75,7 @@ public:
             for (auto&& childMovePair : currentState.GetChildren())
             {
 				//TODO: Do it nicer - who is first? second? 
-                auto&& childState = childMovePair.first;
-                MoveDirection move = childMovePair.second;
-
+                auto&& [childState, move] = childMovePair;
 				if(closedSet.find( childState) == closedSet.end())
                 {
                     Moves childMoves = currentMoves;
@@ -85,4 +99,5 @@ private:
             throw std::runtime_error("state not solvable");
 
     }
+    
 };

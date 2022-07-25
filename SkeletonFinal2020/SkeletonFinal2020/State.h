@@ -67,10 +67,10 @@ public:
 
         return sortedData == validSortedData;*/
 
-        return std::is_permutation(m_data.begin(), m_data.end(), GoalState().GoalData().begin());
+        return std::is_permutation(m_data.begin(), m_data.end(), GoalState().GetData().begin());
     }
 
-    size_t countInversions(typename Data::iterator begin, typename Data::iterator end) const
+    size_t countInversions(typename Data::const_iterator begin, typename Data::const_iterator end) const
     {
         size_t acc{ 0u };
         for (auto it = begin; it != end; ++it)
@@ -141,20 +141,20 @@ private: // methods
     // TODO: Perform the move if possible and return the state. Returns std::nullopt otherwise.
     std::optional<State> Move(MoveDirection direction) const
     {
-        switch (direction)
+        /*switch (direction)
         {
         case MoveDirection::LEFT:   return MoveLeft();
         case MoveDirection::UP:     return MoveUp();
         case MoveDirection::RIGHT:  return MoveRight();
         case MoveDirection::DOWN:   return MoveDown();
         default:                    throw std::runtime_error("Not implemented.");
-        }
+        }*/
 
         /*static const std::map<MoveDirection, std::function<std::optional<State>(const State&)>> moveByDirection {
             {MoveDirection::LEFT, std::mem_fn(&State::MoveLeft)},
             {MoveDirection::RIGHT, std::mem_fn(&State::MoveRight)},
             {MoveDirection::UP, std::mem_fn(&State::MoveUp)},
-            {MoveDirection::DOWN, std::mem_fn(&State::MoveDown)},
+            {MoveDirection::DOWN, std::mem_fn(&State::MoveDown)}
         };
 
         if (std::find(moveByDirection.begin(), moveByDirection.end(), direction) != moveByDirection.end()) {
@@ -163,6 +163,17 @@ private: // methods
         else {
             return std::nullopt;
         }*/
+
+        static const std::map < MoveDirection, std::function<std::optional<State>(const State&)>> directionToAction =
+        {
+            { MoveDirection::DOWN, std::mem_fn(&State::MoveDown) }, // creates a function with signature std::optional<State>(const State&)
+            { MoveDirection::UP, std::mem_fn(&State::MoveUp) },
+            { MoveDirection::LEFT, std::mem_fn(&State::MoveLeft) },
+            { MoveDirection::RIGHT, std::mem_fn(&State::MoveRight) },
+        };
+
+        auto function = directionToAction.at(direction);
+        return function(*this);
 
     }
 
@@ -204,6 +215,7 @@ private: // methods
         auto blankPosition = GetBlankPosition();
         return SwapTiles(*this, blankPosition, blankPosition + N);
     }
+
 
 };
 
