@@ -149,6 +149,21 @@ private: // methods
         case MoveDirection::DOWN:   return MoveDown();
         default:                    throw std::runtime_error("Not implemented.");
         }
+
+        /*static const std::map<MoveDirection, std::function<std::optional<State>(const State&)>> moveByDirection {
+            {MoveDirection::LEFT, std::mem_fn(&State::MoveLeft)},
+            {MoveDirection::RIGHT, std::mem_fn(&State::MoveRight)},
+            {MoveDirection::UP, std::mem_fn(&State::MoveUp)},
+            {MoveDirection::DOWN, std::mem_fn(&State::MoveDown)},
+        };
+
+        if (std::find(moveByDirection.begin(), moveByDirection.end(), direction) != moveByDirection.end()) {
+            return moveByDirection.at(direction)(*this);
+        }
+        else {
+            return std::nullopt;
+        }*/
+
     }
 
     static State SwapTiles(const State& state, size_t firstPos, size_t secondPos)

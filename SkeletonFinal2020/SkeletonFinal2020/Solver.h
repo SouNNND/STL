@@ -79,6 +79,10 @@ private:
     template <class State_t>
     static void Validate(const State_t& state)
     {
-		return;
+        if (!state.IsValid())
+            throw std::runtime_error("state not valid");
+        if (!state.IsSolvable())
+            throw std::runtime_error("state not solvable");
+
     }
 };
