@@ -23,7 +23,7 @@ private: // members
 public:
     static const size_t Dimension = N;    
 
-	State() {} // TODO
+    State() = delete;
     State(Data data) : m_data{ std::move(data) } {};
 
     const Data& GetData() const
@@ -34,11 +34,18 @@ public:
     static const State GoalState()
     {
         // TODO: Refactor with STL        
-        Data goalData;         
-        for (auto idx = 0u; idx < goalData.size(); ++idx)
+        Data goalData;
+        size_t idx = 0;
+        /*for (auto element : goalData)
+        {
+            elem = ++idx;
+        }*/
+        std::iota(goalData.begin(), goalData.end(), 1);
+        /*for (auto idx = 0u; idx < goalData.size(); ++idx)
         {
             goalData[idx] = idx+1;
-        }
+        }*/
+
         goalData.back() = 0;        
         return State(goalData);
     }
@@ -50,37 +57,13 @@ public:
 
     bool IsValid() const
     {
-        // TODO refactor with STL(the 3 fors)
-		// no duplicates
-		// pieces 1 - 8 
-		// empty space 0 present
+        Data sortedData = m_data;
+        //std::copy(m_data.begin(), m_data.end(), sortedData.begin()); -> my solution
 
-        Data sortedData;
-        
-        for (auto idx = 0u; idx < m_data.size(); ++idx)
-        {
-            sortedData[idx] = m_data[idx];
-        }
-
-        for (auto idxI = 0u; idxI < sortedData.size() - 1 ; ++idxI)
-        {
-			for (auto idxJ = 0u; idxJ < sortedData.size() - idxI - 1 ; ++idxJ)
-			{
-				if (sortedData[idxJ] >  sortedData[idxJ + 1])
-				{
-					auto temp = sortedData[idxJ];
-					sortedData[idxJ] = sortedData[idxJ + 1];
-					sortedData[idxJ + 1] = temp;
-				}
-			}
-        } 
+        std::sort(m_data.begin(), m_data.end());
 
         Data validSortedData;
-        
-        for (auto idx = 0u; idx < validSortedData.size(); ++idx)
-        {
-            validSortedData[idx] = idx;
-        }
+        std::iota(validSortedData.begin(), validSortedData.end(), 0);
 
         return sortedData == validSortedData;
     }
