@@ -57,7 +57,7 @@ public:
 
     bool IsValid() const
     {
-        Data sortedData = m_data;
+        /*Data sortedData = m_data;
         //std::copy(m_data.begin(), m_data.end(), sortedData.begin()); -> my solution
 
         std::sort(m_data.begin(), m_data.end());
@@ -65,24 +65,26 @@ public:
         Data validSortedData;
         std::iota(validSortedData.begin(), validSortedData.end(), 0);
 
-        return sortedData == validSortedData;
+        return sortedData == validSortedData;*/
+
+        return std::is_permutation(m_data.begin(), m_data.end(), GoalState().GoalData().begin());
     }
+
+    size_t countInversions(typename Data::iterator begin, typename Data::iterator end) const
+    {
+        size_t acc{ 0u };
+        for (auto it = begin; it != end; ++it)
+        {
+            auto&& current = *it;
+            if (current != 0)
+                acc += std::count_if(it, end, [current](auto next) { return next != 0 && next < current; });
+        }
+
+        return acc;
+    };
 
     bool IsSolvable() const
     {		
-        auto countInversions = [](auto begin, auto end)
-        {
-            size_t acc{ 0u };
-            for (auto it = begin; it != end; ++it)
-            {
-                auto&& current = *it;
-                if (current != 0)
-                    acc += std::count_if(it, end, [current](auto next) { return next != 0 && next < current; });
-            }
-
-            return acc;
-        };
-
         const auto inversionsCount = countInversions(m_data.begin(), m_data.end());
         const auto isInversionCountEven = inversionsCount % 2 == 0;
         const bool isNOdd = N % 2 == 1;
@@ -124,12 +126,9 @@ private: // methods
 
     size_t GetBlankPosition() const
     {
-        // TODO refactor using STL algo
-        for (auto idx = 0u; idx < m_data.size(); ++idx)
-        {
-            if (m_data[idx] == 0)
-                return idx;
-        }
+        auto found = std::find(m_data.begin(), m_data.end(), 0);
+        if (found != m_data.end())
+            return std::distance(m_data.begin(), found);
         throw std::runtime_error("Unexpected");
     }
 
