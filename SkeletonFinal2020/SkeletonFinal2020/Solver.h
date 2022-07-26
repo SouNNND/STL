@@ -9,6 +9,67 @@
 #include <algorithm>
 #include <unordered_set>
 
+template <class State_t>
+class Heuristics {
+private:
+    static std::pair<size_t, size_t> getPositions(size_t index, size_t size) {
+        return { index / size, index % size };
+    }
+public:
+    static size_t GetManhattanDistance(const State_t& state) {
+        auto solvedPuzzle = State_t::GoalState().GetData();
+        size_t idx = 0;
+        size_t sum = 0;
+
+        for (auto element : state.GetData()) {
+            auto solvedIndex = std::distance(solvedPuzzle.begin(), std::find(solvedPuzzle.begin(), solvedPuzzle.end(), element));
+
+            std::pair<size_t, size_t> myPositions = getPositions(idx, State_t::Dimension);
+            std::pair<size_t, size_t> solvedPositions = getPositions(solvedIndex, State_t::Dimension);
+            
+            idx++;
+            sum += std::abs(static_cast<int>(myPositions.first - solvedPositions.first));
+            sum += std::abs(static_cast<int>(myPositions.second - solvedPositions.second));
+        }   
+
+        return sum;
+    }
+
+    static size_t GetLinearConflictions(const State_t& state) {
+        //itislinearconflict
+        //how many conflicts are in rows
+        //for (iteram pe linie)
+        //how many conflicts are in columns
+        // for(iteram pe column)
+        // return nrRowConflict + nrColumnConflict
+    }
+
+/*public:
+    static size_t Difference(size_t first, size_t second)
+    {
+        return (first > second) ? first - second : second - first;
+    }
+
+    static size_t GetManhattanDistance(const State_t& state)
+    {
+        static auto getManhattanDistanceForTile = [](size_t goal, size_t actual)
+        {
+            return Difference(goal / State_t::Dimension, actual / State_t::Dimension) +
+                Difference(goal % State_t::Dimension, actual % State_t::Dimension);
+        };
+
+        size_t distance = 0u;
+        size_t index = 0;
+        for (auto it = state.GetData().begin(); it != state.GetData().end(); ++it, ++index)
+        {
+            if (*it != 0)
+                distance += getManhattanDistanceForTile(index, *it - 1);
+        }
+
+        return distance;
+    }*/
+};
+
 class Solver
 {
 public:
@@ -35,7 +96,25 @@ public:
         using Node = std::pair<State_t, Moves>;
 
 		//TODO: define OPEN SET correctly
-		std::queue<Node> openSet;
+        auto greaterComparator = [](const Node& a, const Node& b) -> bool
+        {
+            auto& [state1, moves1] = a;
+            auto& [state2, moves2] = b;
+
+            auto cost1 = Heuristics<State_t>::GetManhattanDistance(state1) + moves1.size();
+            auto cost2 = Heuristics<State_t>::GetManhattanDistance(state2) + moves2.size();
+
+            return cost1 > cost2;
+        };
+
+        /*auto priorityComparator = [](const Node& a, const Node& b) -> bool
+        {
+            return Heuristics<State_t>::GetManhattanDistance(a.first) > Heuristics<State_t>::GetManhattanDistance(b.first);
+        };*/
+
+		std::priority_queue<Node, std::vector<Node>, decltype(greaterComparator)> 
+            openSet(greaterComparator);
+
         openSet.push({ initialState, {} });
 
 		//TODO: define CLOSED SET correctly
@@ -49,7 +128,7 @@ public:
         while (!openSet.empty())
         {
 			// TODO: Do it nicer , who is first? second? structure binding
-            auto currentNode = openSet.front();
+            auto currentNode = openSet.top();
             auto&& [currentState, currentMoves] = currentNode;
             /*auto&& currentState = currentNode.first;
             auto&& currentMoves = currentNode.second;*/

@@ -9,6 +9,11 @@
 #include <algorithm>
 #include <iostream>
 
+//ColumnIterator
+class ColumnIterator {
+
+};
+
 template<size_t N = 3>
 class State
 {
@@ -32,19 +37,11 @@ public:
     }
 
     static const State GoalState()
-    {
-        // TODO: Refactor with STL        
+    {        
         Data goalData;
         size_t idx = 0;
-        /*for (auto element : goalData)
-        {
-            elem = ++idx;
-        }*/
+
         std::iota(goalData.begin(), goalData.end(), 1);
-        /*for (auto idx = 0u; idx < goalData.size(); ++idx)
-        {
-            goalData[idx] = idx+1;
-        }*/
 
         goalData.back() = 0;        
         return State(goalData);
@@ -57,16 +54,6 @@ public:
 
     bool IsValid() const
     {
-        /*Data sortedData = m_data;
-        //std::copy(m_data.begin(), m_data.end(), sortedData.begin()); -> my solution
-
-        std::sort(m_data.begin(), m_data.end());
-
-        Data validSortedData;
-        std::iota(validSortedData.begin(), validSortedData.end(), 0);
-
-        return sortedData == validSortedData;*/
-
         return std::is_permutation(m_data.begin(), m_data.end(), GoalState().GetData().begin());
     }
 

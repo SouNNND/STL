@@ -1,0 +1,36 @@
+﻿  Exercises.cpp
+  NPuzzleDay2cpp.cpp
+  The contents of <optional> are available only with C++17 or later.
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(142,10): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\iostream(19): message : see declaration of 'std'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(220): message : see reference to class template instantiation 'State<N>' being compiled
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(142,18): error C2143: syntax error: missing ';' before '<'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(142,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(143,1): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(187,10): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\iostream(19): message : see declaration of 'std'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(187,18): error C2143: syntax error: missing ';' before '<'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(187,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(188,1): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(195,10): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\iostream(19): message : see declaration of 'std'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(195,18): error C2143: syntax error: missing ';' before '<'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(195,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(196,1): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(203,10): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\iostream(19): message : see declaration of 'std'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(203,18): error C2143: syntax error: missing ';' before '<'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(203,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(204,1): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(211,10): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\iostream(19): message : see declaration of 'std'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(211,18): error C2143: syntax error: missing ';' before '<'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(211,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(212,1): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(116,18): error C2039: 'optional': is not a member of 'std'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\iostream(19): message : see declaration of 'std'
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(116,34): error C3861: 'child': identifier not found
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(117,17): error C3861: 'child': identifier not found
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(119,40): error C2065: 'child': undeclared identifier
+D:\Code\Git\N-Puzzle\SkeletonFinal2020\State.h(119,40): error C3861: 'child': identifier not found
+  Generating Code...
